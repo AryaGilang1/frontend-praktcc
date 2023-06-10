@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Mahasiswa dan Dosen</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Mendapatkan data mahasiswa dari endpoint
+        function getDataMahasiswa() {
+            $.ajax({
+                url: "https://myproject-123200157.et.r.appspot.com/data_mahasiswa",
+                method: "GET",
+                success: function(data) {
+                    displayDataMahasiswa(data);
+                }
+            });
+        }
+
+        // Menampilkan data mahasiswa ke dalam tabel
+        function displayDataMahasiswa(data) {
+            var tableBody = $("#dataMahasiswa tbody");
+            tableBody.empty();
+
+            for (var i = 0; i < data.length; i++) {
+                var row = $("<tr>");
+                var idCell = $("<td>").text(data[i].id);
+                var namaCell = $("<td>").text(data[i].nama);
+                var nimCell = $("<td>").text(data[i].nim);
+                var jurusanCell = $("<td>").text(data[i].jurusan);
+
+                var editButton = $("<button>")
+                    .text("Edit")
+                    .attr("onclick", "editDataMahasiswa(" + data[i].id + ", '" + data[i].nama + "', '" + data[i].nim + "', '" + data[i].jurusan + "')");
+
+                var deleteButton = $("<button>")
+                    .text("Delete")
+                    .attr("onclick", "deleteDataMahasiswa(" + data[i].id + ")");
+
+                var actionCell = $("<td>").append(editButton, deleteButton);
+
+                row.append(idCell, namaCell, nimCell, jurusanCell, actionCell);
+                tableBody.append(row);
+            }
+        }
+
+        // Menambah data mahasiswa
+        function addDataMahasiswa() {
+            var newData = {
+                nama: $("#namaMahasiswa").val(),
+                nim: $("#nimMahasiswa").val(),
+                jurusan: $("#jurusanMahasiswa").val()
+            };
+
+            $.ajax({
+                url: "https://myproject-123200157.et.r.appspot.com/data_mahasiswa",
+                method: "POST",
+                data: JSON.stringify(newData),
+                contentType: "application/json",
+                success: function() {
+                    getDataMahasiswa();
+                }
+            });
+        }
+
+        // Mengubah data mahasiswa berdasarkan ID
+        function editDataMahasiswa(id, nama, nim, jurusan) {
+            var newData = {
+                nama: prompt("Masukkan nama baru:", nama),
+                nim: prompt("Masukkan NIM baru:", nim),
+                jurusan: prompt("Masukkan jurusan baru:", jurusan)
+            };
+
+            $.ajax({
+                url: "https://myproject-123200157.et.r.appspot.com/data_mahasiswa/" + id,
+                method: "PUT",
+                data: JSON.stringify(newData),
+                contentType: "application/json",
+                success: function() {
+                    getDataMahasiswa();
+                }
+            });
+        }
+
+        // Menghapus data mahasiswa berdasarkan ID
+        function deleteDataMahasiswa(id) {
+            if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+                $.ajax({
+                    url: "https://myproject-123200157.et.r.appspot.com/data_mahasiswa/" + id,
+                    method: "DELETE",
+                    success: function() {
+                        getDataMahasiswa();
+                    }
+                });
+            }
+        }
+
+        // Mendapatkan data dosen dari endpoint
+        function getDataDosen() {
+            $.ajax({
+                url: "https://myproject-123200157.et.r.appspot.com/dosen",
+                method: "GET",
+                success: function(data) {
+                    displayDataDosen(data);
+                }
+            });
+        }
+
+        // Menampilkan data dosen ke dalam tabel
+        function displayDataDosen(data) {
+            var tableBody = $("#dataDosen tbody");
+            tableBody.empty();
+
+            for (var i = 0; i < data.length; i++) {
+                var row = $("<tr>");
+                var idCell = $("<td>").text(data[i].id);
+                var nimCell = $("<td>").text(data[i].nim);
+                var namaCell = $("<td>").text(data[i].nama);
+                var jkCell = $("<td>").text(data[i].jk);
+                var alamatCell = $("<td>").text(data[i].alamat);
+
+                var editButton = $("<button>")
+                    .text("Edit")
+                    .attr("onclick", "editDataDosen(" + data[i].id + ", '" + data[i].nim + "', '" + data[i].nama + "', '" + data[i].jk + "', '" + data[i].alamat + "')");
+
+                var deleteButton = $("<button>")
+                    .text("Delete")
+                    .attr("onclick", "deleteDataDosen(" + data[i].id + ")");
+
+                var actionCell = $("<td>").append(editButton, deleteButton);
+
+                row.append(idCell, nimCell, namaCell, jkCell, alamatCell, actionCell);
+                tableBody.append(row);
+            }
+        }
+
+        // Menambah data dosen
+        function addDataDosen() {
+            var newData = {
+                nim: $("#nimDosen").val(),
+                nama: $("#namaDosen").val(),
+                jk: $("#jkDosen").val(),
+                alamat: $("#alamatDosen").val()
+            };
+
+            $.ajax({
+                url: "https://myproject-123200157.et.r.appspot.com/dosen",
+                method: "POST",
+                data: JSON.stringify(newData),
+                contentType: "application/json",
+                success: function() {
+                    getDataDosen();
+                }
+            });
+        }
+
+        // Mengubah data dosen berdasarkan ID
+        function editDataDosen(id, nim, nama, jk, alamat) {
+            var newData = {
+                nim: prompt("Masukkan NIM baru:", nim),
+                nama: prompt("Masukkan nama baru:", nama),
+                jk: prompt("Masukkan jenis kelamin baru:", jk),
+                alamat: prompt("Masukkan alamat baru:", alamat)
+            };
+
+            $.ajax({
+                url: "https://myproject-123200157.et.r.appspot.com/dosen/" + id,
+                method: "PUT",
+                data: JSON.stringify(newData),
+                contentType: "application/json",
+                success: function() {
+                    getDataDosen();
+                }
+            });
+        }
+
+        // Menghapus data dosen berdasarkan ID
+        function deleteDataDosen(id) {
+            if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+                $.ajax({
+                    url: "https://myproject-123200157.et.r.appspot.com/dosen/" + id,
+                    method: "DELETE",
+                    success: function() {
+                        getDataDosen();
+                    }
+                });
+            }
+        }
+
+        // Memuat data mahasiswa dan dosen saat halaman dimuat
+        $(document).ready(function() {
+            getDataMahasiswa();
+            getDataDosen();
+        });
+    </script>
+</head>
+<body>
+    <h1>Data Mahasiswa</h1>
+    <table id="dataMahasiswa">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nama</th>
+                <th>NIM</th>
+                <th>Jurusan</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <div>
+        <label for="namaMahasiswa">Nama:</label>
+        <input type="text" id="namaMahasiswa">
+        <br>
+        <label for="nimMahasiswa">NIM:</label>
+        <input type="text" id="nimMahasiswa">
+        <br>
+        <label for="jurusanMahasiswa">Jurusan:</label>
+        <input type="text" id="jurusanMahasiswa">
+        <br>
+        <button onclick="addDataMahasiswa()">Tambah Data Mahasiswa</button>
+    </div>
+
+    <h1>Data Dosen</h1>
+    <table id="dataDosen">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NIM</th>
+                <th>Nama</th>
+                <th>Jenis Kelamin</th>
+                <th>Alamat</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <div>
+        <label for="nimDosen">NIM:</label>
+        <input type="text" id="nimDosen">
+        <br>
+        <label for="namaDosen">Nama:</label>
+        <input type="text" id="namaDosen">
+        <br>
+        <label for="jkDosen">Jenis Kelamin:</label>
+        <input type="text" id="jkDosen">
+        <br>
+        <label for="alamatDosen">Alamat:</label>
+        <input type="text" id="alamatDosen">
+        <br>
+        <button onclick="addDataDosen()">Tambah Data Dosen</button>
+    </div>
+</body>
+<style>
+    body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+input[type="text"] {
+  padding: 5px;
+  width: 200px;
+}
+
+button {
+  padding: 5px 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.action-buttons {
+  white-space: nowrap;
+}
+
+</style>
+</html>
