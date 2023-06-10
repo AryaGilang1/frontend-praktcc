@@ -7,7 +7,7 @@
         // Mendapatkan data mahasiswa dari endpoint
         function getDataMahasiswa() {
             $.ajax({
-                url: "https://myproject-123200157.et.r.appspot.com/data_mahasiswa",
+                url: "https://20230610t223455-dot-myproject-123200157.et.r.appspot.com/data_mahasiswa/",
                 method: "GET",
                 success: function(data) {
                     displayDataMahasiswa(data);
@@ -51,7 +51,7 @@
             };
 
             $.ajax({
-                url: "https://myproject-123200157.et.r.appspot.com/data_mahasiswa",
+                url: "https://20230610t223455-dot-myproject-123200157.et.r.appspot.com/data_mahasiswa",
                 method: "POST",
                 data: JSON.stringify(newData),
                 contentType: "application/json",
@@ -70,7 +70,7 @@
             };
 
             $.ajax({
-                url: "https://myproject-123200157.et.r.appspot.com/data_mahasiswa/" + id,
+                url: "https://20230610t223455-dot-myproject-123200157.et.r.appspot.com/data_mahasiswa/" + id,
                 method: "PUT",
                 data: JSON.stringify(newData),
                 contentType: "application/json",
@@ -84,7 +84,7 @@
         function deleteDataMahasiswa(id) {
             if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
                 $.ajax({
-                    url: "https://myproject-123200157.et.r.appspot.com/data_mahasiswa/" + id,
+                    url: "https://20230610t223455-dot-myproject-123200157.et.r.appspot.com/data_mahasiswa/" + id,
                     method: "DELETE",
                     success: function() {
                         getDataMahasiswa();
@@ -96,7 +96,7 @@
         // Mendapatkan data dosen dari endpoint
         function getDataDosen() {
             $.ajax({
-                url: "https://myproject-123200157.et.r.appspot.com/dosen",
+                url: "https://20230610t223455-dot-myproject-123200157.et.r.appspot.com/dosen",
                 method: "GET",
                 success: function(data) {
                     displayDataDosen(data);
@@ -142,7 +142,7 @@
             };
 
             $.ajax({
-                url: "https://myproject-123200157.et.r.appspot.com/dosen",
+                url: "https://20230610t223455-dot-myproject-123200157.et.r.appspot.com/dosen",
                 method: "POST",
                 data: JSON.stringify(newData),
                 contentType: "application/json",
@@ -162,7 +162,7 @@
             };
 
             $.ajax({
-                url: "https://myproject-123200157.et.r.appspot.com/dosen/" + id,
+                url: "https://20230610t223455-dot-myproject-123200157.et.r.appspot.com/dosen" + id,
                 method: "PUT",
                 data: JSON.stringify(newData),
                 contentType: "application/json",
@@ -176,7 +176,7 @@
         function deleteDataDosen(id) {
             if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
                 $.ajax({
-                    url: "https://myproject-123200157.et.r.appspot.com/dosen/" + id,
+                    url: "https://20230610t223455-dot-myproject-123200157.et.r.appspot.com/dosen" + id,
                     method: "DELETE",
                     success: function() {
                         getDataDosen();
